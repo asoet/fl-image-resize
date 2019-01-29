@@ -3,6 +3,7 @@
 using System;
 using System.Drawing;
 using ImageProcessor;
+using ImageProcessor.Imaging;
 
 private static readonly Size size = new Size(EnvAsInt("ImageResize-Width"), EnvAsInt("ImageResize-Height"));
 
@@ -12,7 +13,7 @@ public static void Run(Stream original, Stream resized)
     {
         imageFactory
             .Load(original)
-            .Resize(size)
+            .Resize(new ResizeLayer(size, ResizeMode.Crop))
             .Save(resized);
     }
 }
