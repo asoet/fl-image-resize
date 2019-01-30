@@ -3,12 +3,14 @@
 using System;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
+using SixLabors.Primitives;
+using SixLabors.ImageSharp.PixelFormats;
 
-private static readonly Size size = new SixLabors.Primitives.Size(EnvAsInt("ImageResize-Width"), EnvAsInt("ImageResize-Height"));
+private static readonly Size size = new Size(EnvAsInt("ImageResize-Width"), EnvAsInt("ImageResize-Height"));
 
 public static void Run(Stream original, Stream resized)
 {
-    using (Image<PixelFormats.Rgba32> image = Image.Load(original))
+    using (Image<Rgba32> image = Image.Load(original))
     {
         image.Mutate(x => x
                 .Resize(new ResizeOptions()
