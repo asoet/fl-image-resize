@@ -12,7 +12,7 @@
       "name": "resized",
       "path": "thumbnails/{name}",
       "connection": "ImageRepository",
-      "direction": "out"
+      "direction": "inout"
     }
   ],
   "disabled": false
