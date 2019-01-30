@@ -1,20 +1,22 @@
 #r "System.Drawing"
 
 using System;
-using System.Drawing;
-using ImageProcessor;
-using ImageProcessor.Imaging;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 
-private static readonly Size size = new Size(EnvAsInt("ImageResize-Width"), EnvAsInt("ImageResize-Height"));
+private static readonly Size size = new SixLabors.Primitives.Size(EnvAsInt("ImageResize-Width"), EnvAsInt("ImageResize-Height"));
 
 public static void Run(Stream original, Stream resized)
 {
-    using (var imageFactory = new ImageFactory())
+    using (Image<PixelFormats.Rgba32> image = Image.Load(original))
     {
-        imageFactory
-            .Load(original)
-            .Resize(new ResizeLayer(size, ResizeMode.Crop))
-            .Save(resized);
+        image.Mutate(x => x
+                .Resize(new ResizeOptions()
+                {
+                    Size = size,
+                    Mode = ResizeMode.Crop
+                }));
+        image.SaveAsPng(resized);
     }
 }
 
